@@ -1,0 +1,21 @@
+from sklearn.datasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+
+# 1. Load and split dataset (80% train, 20% test)
+digits = load_digits()
+X_train, X_test, y_train, y_test = train_test_split(
+    digits.data, digits.target, test_size=0.2, random_state=42
+)
+# 2. Train KNN model
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+# 3. Evaluate and plot confusion matrix
+y_pred = model.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+
+ConfusionMatrixDisplay(cm).plot()
+plt.show()
